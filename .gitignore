@@ -105,6 +105,11 @@ modules.order
 /include/ksym/
 /arch/*/include/generated/
 
+#
+# Generated modules
+#
+/modules
+
 # stgit generated dirs
 patches-*
 

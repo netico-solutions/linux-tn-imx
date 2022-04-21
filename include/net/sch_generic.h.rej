@@ -1,0 +1,38 @@
+--- include/net/sch_generic.h
++++ include/net/sch_generic.h
+@@ -208,17 +213,35 @@ static inline bool qdisc_run_begin(struct Qdisc *qdisc)
+ 	} else if (qdisc_is_running(qdisc)) {
+ 		return false;
+ 	}
++#ifdef CONFIG_PREEMPT_RT
++	if (spin_trylock(&qdisc->running.lock)) {
++		seqcount_t *s = &qdisc->running.seqcount.seqcount;
++		/*
++		 * Variant of write_seqcount_t_begin() telling lockdep that a
++		 * trylock was attempted.
++		 */
++		raw_write_seqcount_t_begin(s);
++		seqcount_acquire(&s->dep_map, 0, 1, _RET_IP_);
++		return true;
++	}
++	return false;
++#else
+ 	/* Variant of write_seqcount_begin() telling lockdep a trylock
+ 	 * was attempted.
+ 	 */
+ 	raw_write_seqcount_begin(&qdisc->running);
+ 	seqcount_acquire(&qdisc->running.dep_map, 0, 1, _RET_IP_);
+ 	return true;
++#endif
+ }
+ 
+ static inline void qdisc_run_end(struct Qdisc *qdisc)
+ {
++#ifdef CONFIG_PREEMPT_RT
++	write_sequnlock(&qdisc->running);
++#else
+ 	write_seqcount_end(&qdisc->running);
++#endif
+ 	if (qdisc->flags & TCQ_F_NOLOCK) {
+ 		spin_unlock(&qdisc->seqlock);
+ 
