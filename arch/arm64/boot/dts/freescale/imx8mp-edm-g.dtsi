@@ -141,6 +141,7 @@
 	status = "okay";
 };
 
+/* ecspi1 is SPI_A on TechNexion WB */
 &ecspi1 {
 	#address-cells = <1>;
 	#size-cells = <0>;
@@ -152,8 +153,8 @@
 
 	spidev1: spi@0 {
 		reg = <0>;
-		compatible = "rohm,dh2228fv";
-		spi-max-frequency = <500000>;
+		compatible = "spidev";
+		spi-max-frequency = <5000000>;
 	};
 };
 
