@@ -157,6 +157,22 @@
 	};
 };
 
+&ecspi2 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	num-cs = <1>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ecspi2 &pinctrl_ecspi2_cs>;
+	cs-gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
+	status = "okay";
+
+	spidev_rtd1: spi@0 {
+		reg = <0>;
+		compatible = "spidev";
+		spi-max-frequency = <5000000>;
+	};
+};
+
 &eqos {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_eqos>;
@@ -460,14 +476,14 @@
 };
 
 /* UART_B on EDMG */
-&uart4 {
+/* &uart4 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_uart4>;
 	assigned-clocks = <&clk IMX8MP_CLK_UART4>;
 	assigned-clock-parents = <&clk IMX8MP_SYS_PLL1_80M>;
 	fsl,uart-has-rtscts;
 	status = "okay";
-};
+}; */
 
 &usb3_phy0 {
 	fsl,phy-tx-vref-tune = <0xe>;
@@ -607,6 +623,20 @@
 		>;
 	};
 
+	pinctrl_ecspi2: ecspi2grp {
+		fsl,pins = <
+			MX8MP_IOMUXC_ECSPI2_SCLK__ECSPI2_SCLK		0x82
+			MX8MP_IOMUXC_ECSPI2_MOSI__ECSPI2_MOSI		0x82
+			MX8MP_IOMUXC_ECSPI2_MISO__ECSPI2_MISO		0x82
+		>;
+	};
+
+	pinctrl_ecspi2_cs: ecspi2cs {
+		fsl,pins = <
+			MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06		0x40000
+		>;
+	};
+
 	pinctrl_eqos: eqosgrp {
 		fsl,pins = <
 			MX8MP_IOMUXC_ENET_MDC__ENET_QOS_MDC	0x3
@@ -742,6 +772,7 @@
 		>;
 	};
 
+/*
 	pinctrl_uart4: uart4grp {
 		fsl,pins = <
 			MX8MP_IOMUXC_ECSPI2_SCLK__UART4_DCE_RX		0x140
@@ -750,6 +781,7 @@
 			MX8MP_IOMUXC_ECSPI2_SS0__UART4_DCE_RTS		0x140
 		>;
 	};
+*/
 
 	pinctrl_usdhc1: usdhc1grp {
 		fsl,pins = <
