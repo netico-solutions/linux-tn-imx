@@ -162,26 +162,14 @@
 &ecspi2 {
 	#address-cells = <1>;
 	#size-cells = <0>;
-	num-cs = <3>;
+	num-cs = <1>;
 	pinctrl-names = "default";
 	pinctrl-0 = <&pinctrl_ecspi2 &pinctrl_ecspi2_cs>;
-	cs-gpios = <&gpio1 6 GPIO_ACTIVE_LOW>, <&gpio5 13 GPIO_ACTIVE_LOW>, <&gpio4 6 GPIO_ACTIVE_LOW>;
+	cs-gpios = <&gpio1 6 GPIO_ACTIVE_LOW>;
 	status = "okay";
 
 	spidev_rtd1: spi@0 {
 		reg = <0>;
-		compatible = "rohm,dh2228fv";
-		spi-max-frequency = <5000000>;
-	};
-
-	spidev_rtd2: spi@1 {
-		reg = <1>;
-		compatible = "rohm,dh2228fv";
-		spi-max-frequency = <5000000>;
-	};
-
-	spidev_rtd3: spi@2 {
-		reg = <2>;
 		compatible = "rohm,dh2228fv";
 		spi-max-frequency = <5000000>;
 	};
@@ -653,8 +641,6 @@
 	pinctrl_ecspi2_cs: ecspi2cs {
 		fsl,pins = <
 			MX8MP_IOMUXC_GPIO1_IO06__GPIO1_IO06		0x40000	/* DSI_RST */
-			MX8MP_IOMUXC_ECSPI2_SS0__GPIO5_IO13		0x40000	/* UART_B_RTS */
-			MX8MP_IOMUXC_SAI1_RXD4__GPIO4_IO06		0x40000 /* GPIO_P249 */
 		>;
 	};
 
