@@ -111,6 +111,8 @@
 			reg = <1>;
 			at803x,led-act-blind-workaround;
 			at803x,eee-disabled;
+			rtl821x,aldps-disable;
+			rtl821x,clkout-disable;
 		};
 	};
 };
@@ -164,14 +166,14 @@
 				regulator-max-microvolt = <1300000>;
 				regulator-boot-on;
 				regulator-always-on;
-				rohm,dvs-run-voltage = <1000000>;
+				rohm,dvs-run-voltage = <900000>;
 			};
 
 			buck4: BUCK4 {
 				regulator-name = "buck4";
 				regulator-min-microvolt = <700000>;
 				regulator-max-microvolt = <1300000>;
-				rohm,dvs-run-voltage = <1000000>;
+				rohm,dvs-run-voltage = <900000>;
 				regulator-always-on;
 			};
 
@@ -436,8 +438,8 @@
 			MX8MQ_IOMUXC_ENET_RXC_ENET1_RGMII_RXC	0x91
 			MX8MQ_IOMUXC_ENET_RX_CTL_ENET1_RGMII_RX_CTL	0x91
 			MX8MQ_IOMUXC_ENET_TX_CTL_ENET1_RGMII_TX_CTL	0x1f
-			MX8MQ_IOMUXC_GPIO1_IO09_GPIO1_IO9	0x19	/* ENET_nRST */
-			MX8MQ_IOMUXC_GPIO1_IO11_GPIO1_IO11	0x19	/* ENET_IRQ */
+			MX8MQ_IOMUXC_GPIO1_IO09_GPIO1_IO9	0x36	/* ENET_nRST */
+			MX8MQ_IOMUXC_GPIO1_IO11_GPIO1_IO11	0x36	/* ENET_IRQ */
 			MX8MQ_IOMUXC_GPIO1_IO13_GPIO1_IO13	0x19	/* ENET_PWR */
 		>;
 	};
